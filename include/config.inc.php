@@ -9,6 +9,6 @@
     }
     mysqli_set_charset($conn,"utf8");
     date_default_timezone_set("Asia/bangkok");
-    error_reporting(0);
-    // error_reporting(~E_NOTICE);
+    // error_reporting(0);
+    error_reporting(~E_NOTICE);
 ?>                      
