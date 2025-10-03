@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 03, 2025 at 09:47 AM
+-- Generation Time: Oct 03, 2025 at 12:55 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -57,8 +57,18 @@ CREATE TABLE `tb_products` (
   `cost_price` decimal(10,2) NOT NULL,
   `sell_price` decimal(10,2) NOT NULL,
   `is_active` enum('Available','Not Available') DEFAULT 'Available',
-  `product_pic` varchar(100) DEFAULT NULL
+  `product_pic` varchar(100) DEFAULT NULL,
+  `product_num` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_products`
+--
+
+INSERT INTO `tb_products` (`product_id`, `product_name`, `category_id`, `cost_price`, `sell_price`, `is_active`, `product_pic`, `product_num`) VALUES
+(3, 'บะหมี่กึ่งสำเร็จรูป', 2, 12.00, 15.00, NULL, '', 100),
+(4, 'เป็ปซี่', 1, 15.00, 20.00, NULL, '', 50),
+(5, 'เบียร์สิงห์', 1, 60.00, 69.00, NULL, '', 20);
 
 -- --------------------------------------------------------
 
@@ -220,7 +230,7 @@ ALTER TABLE `tb_category`
 -- AUTO_INCREMENT for table `tb_products`
 --
 ALTER TABLE `tb_products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `tb_roles`

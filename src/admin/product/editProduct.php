@@ -10,7 +10,7 @@ $sql = "SELECT * FROM tb_products WHERE product_id='$product_id'";
 $read = mysqli_fetch_assoc(mysqli_query($conn, $sql));
 ?>
 
-<form action="editConfrim.php" enctype="multipart/form-data" method="POST" onsubmit="return check()">
+<form action="editConfirm.php" enctype="multipart/form-data" method="POST" onsubmit="return check()">
     <div class="modal-content" style="border-radius:30px">
         <div class="modal-header">
             <h2><b>แก้ไขข้อมูลสินค้า</b></h2>
@@ -71,7 +71,7 @@ $read = mysqli_fetch_assoc(mysqli_query($conn, $sql));
         <div class="modal-footer bg-1 text-center">
             <input type="hidden" name="product_id" value="<?= $product_id ?>">
             <input type="hidden" name="product_pic" value="<?= $read['product_pic'] ?>">
-            <button class="btn btn-lg btn-warning" type="submit" style="border-radius:30px">แก้ไขข้อมูลสินค้า</button>
+            <button class="btn btn-lg btn-warning" type="submit" style="border-radius:30px">แก้ไข</button>
             <button class="btn btn-lg btn-danger" type="reset" style="border-radius:30px">ยกเลิก</button>
         </div>
     </div>

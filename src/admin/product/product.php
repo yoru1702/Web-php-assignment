@@ -16,7 +16,7 @@
 <link rel="stylesheet" href="../../../asset/css/bootstrap.min.css">
 <link rel="stylesheet" href="../../asset/css/style.css">
 <script src="../../../asset/js/bootstrap.bundle.min.js"></script>
-<script src="../../../asset/js/jquery-3.7.min.js"></script>
+<script src="../../../asset/js/jquery-3.7.1.min.js"></script>
 
 <div class="row">
     <div class="col-lg-2 col-sm-2 col-12 border-end bg-1">
@@ -74,7 +74,7 @@
                         <td class="text-danger"><?=number_format($row['cost_price'],2)?> ฿</td>
                         <td class="text-success fw-bold"><?=number_format($row['sell_price'],2)?> ฿</td>
                         <td>
-                            <a class="btn btn-warning btn-sm">แก้ไข</a>
+                            <a class="btn btn-warning btn_edit" data-id="<?=$row['product_id']?>">แก้ไข</a>
                             <a class="btn btn-danger btn-sm" onclick="return confirm('ท่านต้องการลบข้อมูลใช่หรือไม่?')">ลบ</a>
                         </td>
                     </tr>
@@ -105,21 +105,23 @@
     });
     $(function(){
         $(".btn_edit").on('click',function(){
+            let product_id = $(this).data("id");
             $.ajax({
                 url:"editProduct.php",
-                data:"product_id="+$(this).attr("product_id"),
                 type:"POST",
+                data:{ product_id: product_id },
                 success:function(result){
                     $("#adm").html('');
                     $("#adm").html(result);
                     $("#am").modal('show');
                 },
                 error:function(error){
-                    alert(error.responsetext);
+                    alert(error.responseText);
                 },
             });
         });
     });
+
 </script>
 <div class="modal fade" id="am" role="dialog">
     <div class="modal-dialog modal-xl" role="document" id="adm"></div>
