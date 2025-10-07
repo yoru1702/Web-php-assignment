@@ -75,7 +75,7 @@
                         <td class="text-success fw-bold"><?=number_format($row['sell_price'],2)?> ฿</td>
                         <td>
                             <a class="btn btn-warning btn_edit" data-id="<?=$row['product_id']?>">แก้ไข</a>
-                            <a class="btn btn-danger btn-sm" onclick="return confirm('ท่านต้องการลบข้อมูลใช่หรือไม่?')">ลบ</a>
+                            <a class="btn btn-danger" href="delProduct.php?product_id=<?=$row['product_id']?>&product_pic=<?=$row['product_pic']?>" onclick="return confirm('ต้องการลบข้อมูลใช่หรือไม่?')">ลบ</a>
                         </td>
                     </tr>
                     <?php endwhile; ?>
