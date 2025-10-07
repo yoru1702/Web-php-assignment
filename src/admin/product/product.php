@@ -11,6 +11,10 @@
         $sql="select * from tb_products where category_id='$type' order by product_id asc";
         $Data=mysqli_query( $conn,$sql);
     }
+
+    if($product_pic==""){
+        $product_pic="no.png";
+    }
     $Num=mysqli_num_rows($Data);
 ?>
 <link rel="stylesheet" href="../../../asset/css/bootstrap.min.css">
@@ -20,15 +24,16 @@
 
 <div class="row">
     <div class="col-lg-2 col-sm-2 col-12 border-end bg-1">
-        <?php include "../navbar.php";?>
+        <?php include "navbar.php";?>
     </div>
     <div class="col-lg-10 col-sm-10 col-12">
+        <?php include "head.php";?>
+        <br><br><br><br><br> 
         <div class="container"><br>
             <center><h2><b>จัดการสินค้า</b></h2></center><br>
             <div class="row">
-                <div class="col-lg-1 col-sm-4"></div>
-                <div class="col-lg-10 col-sm-4">
-                    <a class="btn btn_add btn-primary">เพิ่มสินค้า</a>
+                <div class="col-lg-12 col-sm-12">
+                    <a class="btn btn_add btn-primary">-&nbsp;&nbsp;&nbsp;&nbsp;เพิ่มสินค้า&nbsp;&nbsp;&nbsp;&nbsp;-</a><br><br>
                     <form action="product.php" method="post">
                         <div class="input-group">
                             <select name="type" id="type" class="form-select" required>
@@ -44,7 +49,6 @@
                         </div>
                     </form><br>
                 </div>
-                <div class="col-lg-1 col-sm-4"></div>
             </div>
             <?php if($Num==0): ?>
                 <center><h2 class="text-danger"><b>ไม่พบข้อมูล</b></h2></center>
@@ -64,7 +68,7 @@
                     <tr align="center">
                         <td><?=$row['product_id']?></td>
                         <td>
-                            <img src="product/<?=$row['product_pic']?>" class="rounded-pill" width="100"><br>
+                            <img src="../asset/img/product/<?=$row['product_pic']?>" class="rounded-pill" width="100"><br>
                             <?=$row['product_name']?>
                         </td>
                         <td>

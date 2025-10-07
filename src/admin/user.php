@@ -1,25 +1,27 @@
 <?php
-session_start();
-include "../../include/config.inc.php";
-include "../../include/function.php";
+    ini_set('session.cookie_path', '/');
+    session_start();
+    ob_start(); // เริ่มเก็บ output buffer
+    include "../../include/config.inc.php";
+    $sql="select distinct(role_id) from tb_roles";
+    $result=mysqli_query($conn,$sql);
+    include "../../include/function.php";
 
-$search = $_POST['name'] ?? '';
-$Data = getUser($conn, $search);
-$Num = mysqli_num_rows($Data);
+    $search = $_POST['name'] ?? '';
+    $Data = getUser($conn, $search);
+    $Num = mysqli_num_rows($Data);
 ?>
-<link rel="stylesheet" href="../../asset/css/bootstrap.min.css">
-<link rel="stylesheet" href="../../asset/css/style.css">
-<script src="../../asset/js/bootstrap.bundle.min.js"></script>
-<script src="../../asset/js/jquery-3.7.min.js"></script>
 
 <div class="row">
     <div class="col-lg-2 col-sm-2 col-12 border-end bg-1">
         <?php include "navbar.php";?>
     </div>
     <div class="col-lg-10 col-sm-10 col-12">
+        <?php include "head.php";?>
+        <br><br><br><br><br>
         <div class="container my-4">
             <center><h2><b>ข้อมูลพนักงาน</b></h2></center>
-            <a class="btn btn-primary mb-3">เพิ่มข้อมูลพนักงาน</a>
+            <a class="btn btn-primary mb-3">-&nbsp;&nbsp;&nbsp;&nbsp;เพิ่มข้อมูลพนักงาน&nbsp;&nbsp;&nbsp;&nbsp;-</a>
             <form action="user.php" method="post" class="mb-3">
                 <div class="input-group">
                     <span class="input-group-text">ค้นหา</span>
