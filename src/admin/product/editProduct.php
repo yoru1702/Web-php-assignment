@@ -1,20 +1,19 @@
 <?php
-session_start();
-include '../../../include/config.inc.php';
-include '../../../include/function.php';
+    session_start();
+    include '../../../include/config.inc.php';
+    include '../../../include/function.php';
 
-$p = $_POST;
-$product_id = $p['product_id'];
+    $p = $_POST;
+    $product_id = $p['product_id'];
 
-$sql = "SELECT * FROM tb_products WHERE product_id='$product_id'";
-$read = mysqli_fetch_assoc(mysqli_query($conn, $sql));
+    $sql = "SELECT * FROM tb_products WHERE product_id='$product_id'";
+    $read = mysqli_fetch_assoc(mysqli_query($conn, $sql));
 ?>
-
 <form action="editConfirm.php" enctype="multipart/form-data" method="POST" onsubmit="return check()">
     <div class="modal-content" style="border-radius:30px">
-        <div class="modal-header">
-            <h2><b>แก้ไขข้อมูลสินค้า</b></h2>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+        <div class="modal-header" style="background: linear-gradient(90deg,#108baa,#07c274);color: #fff;border-radius: 29px 29px 0 0;">
+            <h2><b><center>แก้ไขข้อมูลสินค้า</center></b></h2>
+            <button type="button" class="btn-close bg-light" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
             <div class="row">

@@ -4,9 +4,9 @@ include '../../../include/config.inc.php';
 ?>
 <form action="addConfirm.php" enctype="multipart/form-data" onsubmit="return check()" method="post">
     <div class="modal-content" style="border-radius:30px">
-        <div class="modal-header">
+        <div class="modal-header" style="background: linear-gradient(90deg,#108baa,#07c274);color: #fff;border-radius: 29px 29px 0 0;">
             <h2 class="modal-title"><b>เพิ่มสินค้า</b></h2>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            <button type="button" class="btn-close bg-light" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
             <div class="row g-3">

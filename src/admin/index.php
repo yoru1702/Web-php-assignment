@@ -113,4 +113,3 @@ new Chart(ctx2, {
     }
 });
 </script>
-<?php ob_end_flush(); ?>
