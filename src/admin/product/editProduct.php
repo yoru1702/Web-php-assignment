@@ -53,7 +53,14 @@ $read = mysqli_fetch_assoc(mysqli_query($conn, $sql));
             </div>
 
             <div class="row">
-                <div class="col-sm-12 py-1">
+                <div class="col-sm-6 py-1">
+                    <label>สถานะสินค้า :</label>
+                    <select name="is_active" class="form-select" required>
+                        <option value="Available" <?= ($read['is_active']=='Available')?'selected':''; ?>>พร้อมขาย</option>
+                        <option value="Not Available" <?= ($read['is_active']=='Not Available')?'selected':''; ?>>ไม่พร้อมขาย</option>
+                    </select>
+                </div>
+                <div class="col-sm-6 py-1">
                     <label>รูปสินค้า :</label><br>
                     <?php if($read['product_pic']): ?>
                         <center>

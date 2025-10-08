@@ -5,33 +5,27 @@
     include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/include/function.php';
 
     $type=$_POST["type"];
-    if($type==""){
-        $Data=getProduct($conn);
-    }else{
-        $sql="select * from tb_products where category_id='$type' order by product_id asc";
-        $Data=mysqli_query( $conn,$sql);
+    if ($type == "") {
+        $sql = "SELECT * FROM tb_products WHERE is_active='Available' ORDER BY product_id ASC";
+    } else {
+        $sql = "SELECT * FROM tb_products WHERE category_id='$type' AND is_active='Available' ORDER BY product_id ASC";
     }
-    $Num=mysqli_num_rows($Data);
 
-    if($product_pic==""){
-        $product_pic="no.png";
-    }
-    $Num=mysqli_num_rows($Data);
-    
+    $Data = mysqli_query($conn, $sql);
+    $Num = mysqli_num_rows($Data);
 ?>
+
 <div class="row">
     <div class="col-lg-2 col-sm-2 col-12 border-end bg-1">
-        <?php include "../navbar.php";?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/src/admin/navbar.php'; ?>
     </div>
     <div class="col-lg-10 col-sm-10 col-12">
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/src/admin/head.php';?><br><br><br><br><br>
         <div class="container"><br>
-            <center><h2><b>จัดการสินค้า</b></h2></center><br>
+            <center><h2><b>Stock สินค้า</b></h2></center><br>
             <div class="row">
-                <div class="col-lg-1 col-sm-4"></div>
-                <div class="col-lg-10 col-sm-4">
-                    <a class="btn btn_add btn-primary">เพิ่มสินค้า</a>
-                    <form action="product.php" method="post">
+                <div class="col-lg-4 col-sm-4">
+                    <form action="stock.php" method="post">
                         <div class="input-group">
                             <select name="type" id="type" class="form-select" required>
                                 <option value="">---หมวดหมู่สินค้า---</option>
@@ -46,8 +40,11 @@
                         </div>
                     </form><br>
                 </div>
-                <div class="col-lg-1 col-sm-4"></div>
-            </div>
+                <div class="col-lg-4 col-sm-4">
+                </div>
+                <div class="col-lg-4 col-sm-4">
+                </div>
+            </div><hr>
             <?php if($Num==0): ?>
                 <center><h2 class="text-danger"><b>ไม่พบข้อมูล</b></h2></center><br>
             <?php else: ?>
@@ -60,14 +57,8 @@
                         <th>จำนวน</th>
                         <th>ราคาทุน</th>
                         <th>ราคาขาย</th>
-                        <th>สถานะ</th>
-                        <th>จัดการ</th>
                     </tr>
-                    <?php while($row = mysqli_fetch_assoc($Data)):                         
-                        $isActive = $row['is_active'];
-                        $status_class = $isActive == 'Available' ? 'text-success' : 'text-danger';
-                        $status_text = $isActive == 'Available' ? 'พร้อมขาย' : 'ไม่พร้อมขาย';
-                    ?>
+                    <?php while($row = mysqli_fetch_assoc($Data)): ?>
                     <tr align="center">
                         <td><?=$row['product_id']?></td>
                         <td>
@@ -80,12 +71,7 @@
                         <td><?=$row['product_num']?></td>
                         <td class="text-danger fw-bold"><?=number_format($row['cost_price'],2)?> ฿</td>
                         <td class="text-success fw-bold"><?=number_format($row['sell_price'],2)?> ฿</td>
-                         <td class="<?= $status_class ?>"><b><?= $status_text ?></b></td>
-                        <td>
-                            <a class="btn btn-warning btn_edit" data-id="<?=$row['product_id']?>">แก้ไข</a>
-                            <a class="btn btn-danger" href="delProduct.php?product_id=<?=$row['product_id']?>&product_pic=<?=$row['product_pic']?>" onclick="return confirm('ต้องการลบข้อมูลใช่หรือไม่?')">ลบ</a>
-                        </td>
-                    </tr>
+                        </tr>
                     <?php endwhile; ?>
                 </table>
             <?php
@@ -93,44 +79,4 @@
             ?>
         </div>
     </div>
-</div>
-<script>
-    $(function(){
-        $(".btn_add").on('click',function(){
-            $.ajax({
-                url:"addProduct.php",
-                type:"POST",
-                success:function(result){
-                    $("#adm").html('');
-                    $("#adm").html(result);
-                    $("#am").modal('show');
-                },
-                error:function(error){
-                    alert(error.responsetext);
-                },
-            });
-        });
-    });
-    $(function(){
-        $(".btn_edit").on('click',function(){
-            let product_id = $(this).data("id");
-            $.ajax({
-                url:"editProduct.php",
-                type:"POST",
-                data:{ product_id: product_id },
-                success:function(result){
-                    $("#adm").html('');
-                    $("#adm").html(result);
-                    $("#am").modal('show');
-                },
-                error:function(error){
-                    alert(error.responseText);
-                },
-            });
-        });
-    });
-
-</script>
-<div class="modal fade" id="am" role="dialog">
-    <div class="modal-dialog modal-xl" role="document" id="adm"></div>
 </div>
