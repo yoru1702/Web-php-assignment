@@ -6,6 +6,13 @@
     $conn = mysqli_connect($serv, $user, $pass, $data);
     if (!$conn) {
         die("Error Connect! " . mysqli_connect_error());
+    $serv = "localhost";
+    $user = "root";
+    $pass = "";
+    $data = "assignment";
+    $conn = mysqli_connect($serv, $user, $pass, $data);
+    if (!$conn) {
+        die("Error Connect! " . mysqli_connect_error());
     }
 
 
