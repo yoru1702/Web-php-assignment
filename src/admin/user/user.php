@@ -1,44 +1,40 @@
 <?php
     session_start();
-    include "../../../include/config.inc.php";
-    include "../../../include/function.php";
+    include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/include/config.inc.php';
+    include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/include/function.php';
+    include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/src/style.php';
 
     $search = $_POST['name'] ?? '';
     $Data = getUser($conn, $search);
     $Num = mysqli_num_rows($Data);
 ?>
 
-<link rel="stylesheet" href="../../../asset/css/bootstrap.min.css">
-<link rel="stylesheet" href="../../asset/css/style.css">
-<script src="../../../asset/js/bootstrap.bundle.min.js"></script>
-<script src="../../../asset/js/jquery-3.7.1.min.js"></script>
-
 <div class="row">
     <div class="col-lg-2 col-sm-2 col-12 border-end bg-1">
-        <?php include "../navbar.php"; ?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/src/admin/navbar.php'; ?>
     </div>
     <div class="col-lg-10 col-sm-10 col-12">
         <div class="container my-4">
             <center>
                 <h2><b>ข้อมูลพนักงาน</b></h2>
-            </center>
+            </center><br>
             <a class="btn btn-primary mb-3 btn_add">เพิ่มข้อมูลพนักงาน</a>
             <form action="user.php" method="post" class="mb-3">
                 <div class="input-group">
                     <span class="input-group-text">ค้นหา</span>
-                    <input type="text" name="name" class="form-control" placeholder="ค้นหา"
+                    <input type="text" name="name" id="name" class="form-control" placeholder="ค้นหา"
                         value="<?= htmlspecialchars($search) ?>">
                     <button type="submit" class="btn btn-primary">ค้นหา</button>
                 </div>
             </form>
-            <?php if ($Num == 0): ?>
+            <?php if ($Num == 0): ?><br>
                 <center>
                     <h2 class="text-danger"><b>ไม่พบข้อมูล</b></h2>
                 </center>
             <?php else: ?>
                 <center>
                     <h2 class="text-primary"><b>ข้อมูล <?= $Num ?> รายการ</b></h2>
-                </center>
+                </center><br><hr><br>
                 <table class="table table-hover table-striped mt-3">
                     <tr align="center">
                         <th>รหัสพนักงาน</th>

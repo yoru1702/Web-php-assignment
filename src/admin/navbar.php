@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <style>
      .nav-item .nav-link{
           color: #108baa;
@@ -8,6 +9,12 @@
     <ul class="nav-pills nav flex-column">
        <li class="nav-item">
             <a href="#" class="nav-link active" style="background: #108baa;font-weight: bold;font-size: 20px;">Menu</a>
+=======
+<div class="container mt-3">
+    <ul class="nav-pills nav flex-column">
+       <li class="nav-item">
+            <a href="#" class="nav-link active">Menu</a>
+>>>>>>> 6fe7d52dc72a5e6be15307092b3b4cee7586ad3f
        </li>
        <li class="nav-item">
             <a href="index.php" class="nav-link border-bottom">Dashboard</a>
@@ -16,6 +23,7 @@
             <a href="user.php" class="nav-link border-bottom">ข้อมูลพนักงาน</a>
        </li>
        <li class="nav-item">
+<<<<<<< HEAD
             <a href="product/product.php" class="nav-link border-bottom">จัดการสินค้า</a>
        </li>
        <li class="nav-item">
@@ -23,6 +31,12 @@
        </li>
        <li class="nav-item">
             <a href="#" class="nav-link active" style="background: #108baa;font-weight: bold;font-size: 20px;">รายงาน</a>
+=======
+            <a href="product.php" class="nav-link border-bottom">จัดการสินค้า</a>
+       </li>
+       <li class="nav-item">
+            <a href="#" class="nav-link active">รายงาน</a>
+>>>>>>> 6fe7d52dc72a5e6be15307092b3b4cee7586ad3f
        </li>
        <li class="nav-item">
             <a href="remem.php" class="nav-link border-bottom">รายงานข้อมูลพนักงาน</a>

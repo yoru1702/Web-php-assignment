@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -57,3 +58,5 @@
     <!-- Navbar end -->
 </body>
 </html>
+=======
+>>>>>>> 6fe7d52dc72a5e6be15307092b3b4cee7586ad3f

@@ -48,7 +48,7 @@
                         <?php echo "&nbsp;&nbsp;&nbsp;$_SESSION[name_user] $_SESSION[sname_user]"; ?>
                     </a>    
                     <ul class="dropdown-menu">
-                        <li><a href="../logout.php" class="dropdown-item" onclick="return confirm('ท่านต้องการออกจากระบบใช่หรือไม่?')">ออกจากระบบ</a></li>
+                        <li><a href="/project_assignment/src/logout.php" class="dropdown-item" onclick="return confirm('ท่านต้องการออกจากระบบใช่หรือไม่?')">ออกจากระบบ</a></li>
                     </ul>
                 </li>
             </div>
