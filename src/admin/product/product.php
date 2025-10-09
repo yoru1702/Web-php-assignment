@@ -17,10 +17,6 @@
     }
     $Num=mysqli_num_rows($Data);
 ?>
-<link rel="stylesheet" href="../../../asset/css/bootstrap.min.css">
-<link rel="stylesheet" href="../../asset/css/style.css">
-<script src="../../../asset/js/bootstrap.bundle.min.js"></script>
-<script src="../../../asset/js/jquery-3.7.1.min.js"></script>
 
 <div class="row">
     <div class="col-lg-2 col-sm-2 col-12 border-end bg-1">
