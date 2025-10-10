@@ -1,13 +1,21 @@
 <?php
-  $sql="SELECT * FROM tb_products WHERE is_active = 'Available'"; 
-  $result=mysqli_query($conn,$sql);
-  $sql1="select * from tb_category";
-  $result1=mysqli_query($conn,$sql1);
-  $num =0;
-  $dis =0;
-  $sum =0;
-  $total =0;
-?>
+    ini_set('session.cookie_path', '/');
+    session_start();
+    ob_start(); // เริ่มเก็บ output buffer    
+    include "../../include/config.inc.php";
+    $sql="select distinct(role_id) from tb_roles";
+    $result=mysqli_query($conn,$sql);
+    $sql1="SELECT * FROM tb_products WHERE is_active = 'Available'"; 
+    $result1=mysqli_query($conn,$sql1);
+    $sql2="select * from tb_category";
+    $result2=mysqli_query($conn,$sql2);
+    $num =0;
+    $dis =0;
+    $sum =0;
+    $money =0;
+    $total =0;
+    $total_cal =0;
+?> 
 <style>
   @import url('https://fonts.googleapis.com/css2?family=Prompt:wght@400;500;700&display=swap');
   body{
@@ -21,110 +29,146 @@
           /* background-image: url(../asset/img/background.png); */
   }
 </style>
-<div class="modal-dialog modal-xl">
-    <div class="modal-content" style="border-radius: 30px 30px 0 0;">
-        <div class="modal-header" style="border-radius: 28px 28px 0 0;background: #07c274;color: #fff;">
-            <h3 class="modal-title"><b>ขายสินค้า</b></h3>
-            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-2 col-sm-2 col-12 border-end">
+            <?php include "navbar.php"; ?>
         </div>
-        <div class="modal-body">
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-2 col-sm-2 col-12">
-                <label><h5 class="m-2">ค้นหาสินค้า</h5></label>
-              </div>
-              <div class="col-lg-5 col-sm-5 col-12">
-                <form class="d-flex">
-                  <input class="form-control me-2" type="text" placeholder="กรุณากรอกสินค้า">
-                  <button class="btn btn-primary" id="searchBtn" type="button">ค้นหา</button>
-                </form>
-              </div>
-              <div class="col-lg-5 col-sm-5 col-12">
-                <!-- เปลี่ยน option ให้ value เป็น category_id จริง -->
-                <select name="sex" id="sex" class="form-select" required>
-                  <option value="*">--- เลือกประเภทสินค้า ---</option>
-                  <?php
-                    while($read1=mysqli_fetch_assoc($result1)){
-                      $category_id = $read1["category_id"];
-                      $category_name = $read1["category_name"];
-                  ?>
-                    <option value="<?php echo $category_id; ?>"><?php echo $category_id . " : " . $category_name; ?></option>
-                  <?php } ?>
-                </select>
+        <div class="col-lg-10 col-sm-10 col-12">
+            <?php include "head.php"; ?>
+            <br><br><br><br><br>
+            <h1><b><center>ขายสินค้า</center></b></h1><hr>
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-2 col-sm-2 col-12">
+                        <label><h5 class="m-2">ค้นหาสินค้า</h5></label>
+                    </div>
+                    <div class="col-lg-5 col-sm-5 col-12">
+                        <form class="d-flex">
+                        <input class="form-control me-2" type="text" placeholder="กรุณากรอกสินค้า">
+                        <button class="btn btn-primary" id="searchBtn" type="button">ค้นหา</button>
+                        </form>
+                    </div>
+                    <div class="col-lg-5 col-sm-5 col-12">
+                    <!-- เปลี่ยน option ให้ value เป็น category_id จริง -->
+                    <select name="sex" id="sex" class="form-select" required>
+                    <option value="*">--- เลือกประเภทสินค้า ---</option>
+                    <?php
+                        while($read2=mysqli_fetch_assoc($result2)){
+                        $category_id = $read2["category_id"];
+                        $category_name = $read2["category_name"];
+                    ?>
+                        <option value="<?php echo $category_id; ?>"><?php echo $category_id . " : " . $category_name; ?></option>
+                    <?php } ?>
+                    </select>
 
-              </div>
-            </div>
-          </div><hr>
-
-          <div class="container">
-            <div class="row">
-              <div class="col-lg-3 col-sm-3 col-12">
-                <center>
-                  <b>จำนวนสินค้าที่ท่านเลือก : </b> <h4><b style="color: #f78c00ff;"><?php echo "$num"; ?></b></h4>
-                </center>
-              </div>
-              <div class="col-lg-3 col-sm-3 col-12">
-                <center>
-                  <b>ส่วนลด : </b> <h4><b style="color: #009b74ff;"><?php echo "$dis"; ?> %</b></h4>
-                </center>
-              </div>
-              <div class="col-lg-3 col-sm-3 col-12">
-                <center>
-                  <b>ราคาทั้งหมด : </b> <h4><b style="color: #dd0055ff;"><?php echo "".number_format($total)." บาท"; ?></b></h4>
-                </center>
-              </div>
-              <div class="col-lg-3 col-sm-3 col-12">
-                <center>
-                  <a href="#" class="btn btn-success m-2">คิดราคาสินค้า</a>
-                </center>
-              </div>
+                    </div>
+                </div>
             </div><hr>
-            <table class="table table-hover table-striped">
-                <tr class="h5" align="center">
-                    <th>รหัสสินค้า</th>
-                    <th>ชื่อสินค้า</th>
-                    <th>ราคาสินค้า</th>
-                    <th>จำนวนสินค้า</th>
-                    <th>เลือกสินค้า</th>
-                    <th>กรอกจำนวน</th>
-                    <th>ราคารวม</th>
-                </tr>
-                <?php
-                    $i=1;
-                    while($read=mysqli_fetch_assoc($result)){
-                        $product_id   = $read["product_id"];
-                        $product_name = $read["product_name"];
-                        $sell_price   = $read["sell_price"];
-                        $category_id   = $read["category_id"];
-                        $is_active    = $read["is_active"];
-                        $product_pic  = $read["product_pic"];
-                        $product_num  = $read["product_num"];
-                ?>
-                <tr align="center"
-                    data-category="<?php echo $category_id; ?>"
-                    data-product-id="<?php echo $product_id; ?>">
-                    <td><?php echo $product_id; ?></td>
-                    <td><?php echo $product_name; ?></td>
-                    <td><?php echo number_format($sell_price) . " บาท"; ?></td>
-                    <td><?php echo $product_num; ?></td>
-                    <td>
-                      <input type="checkbox" class="form-check-input select-checkbox" data-product-id="<?php echo $product_id; ?>">
-                    </td>
-                    <td style="width: 14%;">
-                      <input type="number" min="0" class="form-control qty-input" data-product-id="<?php echo $product_id; ?>" placeholder="กรอกจำนวน">
-                    </td>
-                    <td class="row-total"><?php echo number_format($sum) . " บาท"; ?></td>
-                </tr>
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-lg-8 col-sm-8 col-12 border-end">
+                        <div class="row">
+                            <div class="col-lg-4 col-sm-4 col-12">
+                                <center>
+                                <b>จำนวนสินค้าที่ท่านเลือก : </b> <h4><b style="color: #f78c00ff;"><?php echo "$num"; ?></b></h4>
+                                </center>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-12">
+                                <center>
+                                <b>ส่วนลด : </b> <h4><b style="color: #009b74ff;"><?php echo "$dis"; ?> %</b></h4>
+                                </center>
+                            </div>
+                            <div class="col-lg-4 col-sm-4 col-12">
+                                <center>
+                                <b>ราคาทั้งหมด : </b> <h4><b style="color: #dd0055ff;"><?php echo "".number_format($total)." บาท"; ?></b></h4>
+                                </center>
+                            </div>
+                            <!-- <div class="col-lg-3 col-sm-3 col-12">
+                                <center>
+                                <a href="#" class="btn btn-success m-2">คิดราคาสินค้า</a>
+                                </center>
+                            </div> -->
+                        </div><hr>
+                        <table class="table table-hover table-striped">
+                            <tr class="h5" align="center">
+                                <th>รหัสสินค้า</th>
+                                <th>ชื่อสินค้า</th>
+                                <th>ราคาสินค้า</th>
+                                <th>จำนวนสินค้า</th>
+                                <th>เลือกสินค้า</th>
+                                <th>กรอกจำนวน</th>
+                                <th>ราคารวม</th>
+                            </tr>
+                            <?php
+                                $i=1;
+                                while($read1=mysqli_fetch_assoc($result1)){
+                                    $product_id   = $read1["product_id"];
+                                    $product_name = $read1["product_name"];
+                                    $sell_price   = $read1["sell_price"];
+                                    $category_id   = $read1["category_id"];
+                                    $is_active    = $read1["is_active"];
+                                    $product_pic  = $read1["product_pic"];
+                                    $product_num  = $read1["product_num"];
+                            ?>
+                            <tr align="center"
+                                data-category="<?php echo $category_id; ?>"
+                                data-product-id="<?php echo $product_id; ?>">
+                                <td><?php echo $product_id; ?></td>
+                                <td><?php echo $product_name; ?></td>
+                                <td><?php echo number_format($sell_price) . " บาท"; ?></td>
+                                <td><?php echo $product_num; ?></td>
+                                <td>
+                                <input type="checkbox" class="form-check-input select-checkbox" data-product-id="<?php echo $product_id; ?>">
+                                </td>
+                                <td style="width: 14%;">
+                                <input type="number" min="0" class="form-control qty-input" data-product-id="<?php echo $product_id; ?>" placeholder="กรอกจำนวน">
+                                </td>
+                                <td class="row-total"><?php echo number_format($sum) . " บาท"; ?></td>
+                            </tr>
+        
+                            <?php
+                                $i++;
+                                }
+                            ?>
+                        </table>
+                    </div>
+                    <div class="col-lg-4 col-sm-4 col-12">
+                        <center style="margin: 3.9%;"><h2><b>คิดเงิน/ทอนเงิน</b></h2></center><hr>
+                        <div class="row">
 
-                <?php
-                    $i++;
-                    }
-                ?>
-            </table>
-          </div>
+                            <div class="col-lg-4 col-sm-4 col-12">
+                                <h4 align="right"><b>ราคาทั้งหมด : </b></h4>
+                            </div>
+                            <div class="col-lg-8 col-sm-8 col-12">
+                                <input type="text" class="form-control bg-dark" name="total" id="total" value="<?php echo "".number_format($total)." บาท"; ?>" style="text-align:right;font-size:20px;color: #fff;" readonly>
+                            </div>
+                            
+                            <div class="col-lg-4 col-sm-4 col-12">
+                                <h4 align="right"><b>รับเงิน : </b></h4>
+                            </div>
+                            <div class="col-lg-8 col-sm-8 col-12">
+                                <input type="text" class="form-control bg-dark" name="money" id="money" value="" placeholder="กรอกจำนวนเงินที่รับมา" style="text-align:right;font-size:20px;color: #fff;">
+                            </div>
+
+                            <div class="col-lg-4 col-sm-4 col-12">
+                                <h4 align="right"><b>เงินทอน : </b></h4>
+                            </div>
+                            <div class="col-lg-8 col-sm-8 col-12">
+                                <input type="text" class="form-control bg-dark text-warning" name="total_cal" id="total_cal" value="<?php echo "".number_format($total_cal)." บาท"; ?>" style="text-align:right;font-size:30px" readonly>
+                            </div>
+                            <div class="col-lg-12 col-sm-12 col-12">
+                                <hr><a href="#" class="btn btn-lg w-100 m-2" style="background: #108baa;color: #fff;"><b>คิดราคาสินค้า</b></a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+
 
 <script>
 document.addEventListener("DOMContentLoaded", function() {
@@ -244,8 +288,15 @@ document.addEventListener("DOMContentLoaded", function() {
 document.addEventListener("DOMContentLoaded", function() {
     const qtyInputs = document.querySelectorAll(".qty-input");
     const checkboxes = document.querySelectorAll(".select-checkbox");
+
+    // ฝั่งแสดงผลด้านบน
     const totalItemsDisplay = document.querySelector("b[style*='#f78c00ff']").parentElement.querySelector("b");
     const totalPriceDisplay = document.querySelector("b[style*='#dd0055ff']").parentElement.querySelector("b");
+
+    // ฝั่งขวา (กล่องคิดเงิน)
+    const totalInputRight = document.getElementById("total");
+    const moneyInput = document.getElementById("money");
+    const changeInput = document.getElementById("total_cal");
 
     function formatNumber(num) {
         return num.toLocaleString("th-TH");
@@ -263,34 +314,51 @@ document.addEventListener("DOMContentLoaded", function() {
             const price = parseFloat(priceText) || 0;
             const qty = parseFloat(qtyInput.value) || 0;
 
-            // ✅ ถ้าเช็กถูกเลือก
             if (chk.checked && qty > 0) {
                 const rowTotal = price * qty;
                 rowTotalCell.innerText = formatNumber(rowTotal) + " บาท";
                 totalItems += qty;
                 grandTotal += rowTotal;
             } else {
-                // ❌ ถ้ายังไม่เลือก (หรือจำนวน = 0)
                 rowTotalCell.innerText = "0 บาท";
             }
         });
 
+        // อัปเดตจำนวนสินค้าและราคารวมฝั่งบน
         totalItemsDisplay.innerText = totalItems;
         totalPriceDisplay.innerText = formatNumber(grandTotal) + " บาท";
+
+        // อัปเดตราคาฝั่งขวา
+        totalInputRight.value = formatNumber(grandTotal) + " บาท";
+
+        // อัปเดตเงินทอน (ถ้ามีการกรอกเงิน)
+        calculateChange();
     }
 
-    // 🎯 เมื่อพิมพ์จำนวนสินค้า
+    function calculateChange() {
+        const totalText = totalInputRight.value.replace(" บาท", "").replace(/,/g, "");
+        const total = parseFloat(totalText) || 0;
+        const money = parseFloat(moneyInput.value) || 0;
+        const change = money - total;
+
+        if (money > 0 && change >= 0) {
+            changeInput.value = formatNumber(change) + " บาท";
+        } else if (money > 0 && change < 0) {
+            changeInput.value = "เงินไม่พอ!";
+        } else {
+            changeInput.value = "0 บาท";
+        }
+    }
+
+    // 🎯 Event listener
     qtyInputs.forEach(input => {
-        input.addEventListener("input", function() {
-            calculateTotals();
-        });
+        input.addEventListener("input", calculateTotals);
     });
 
-    // ✅ เมื่อเลือก / ยกเลิกติ๊กสินค้า
     checkboxes.forEach(chk => {
-        chk.addEventListener("change", function() {
-            calculateTotals();
-        });
+        chk.addEventListener("change", calculateTotals);
     });
+
+    moneyInput.addEventListener("input", calculateChange);
 });
 </script>
