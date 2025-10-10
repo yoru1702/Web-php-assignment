@@ -1,6 +1,9 @@
 <?php
     session_start();
-    
+    if($_SESSION["valid_admin"]==""){
+        echo "<meta http-equiv='refresh' content='0;url=/project_assignment/src/login.php'>";
+        exit();
+    }
     include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/include/config.inc.php';
     include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/include/function.php';
 
@@ -21,12 +24,12 @@
 ?>
 <div class="row">
     <div class="col-lg-2 col-sm-2 col-12 border-end bg-1">
-        <?php include "navbar.php";?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/src/admin/navbar.php';?>
     </div>
     <div class="col-lg-10 col-sm-10 col-12">
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/src/admin/head.php';?><br><br><br><br><br>
         <div class="container"><br>
-            <center><h2><b>จัดการสินค้า</b></h2></center><br>
+            <center><h2><b>จัดการคลังสินค้า</b></h2></center><br>
             <div class="row">
                 <div class="col-lg-12 col-sm-12">
                     <a class="btn btn_add btn-primary">-&nbsp;&nbsp;&nbsp;&nbsp;เพิ่มสินค้า&nbsp;&nbsp;&nbsp;&nbsp;-</a><br><br>

@@ -2,13 +2,17 @@
     ini_set('session.cookie_path', '/');
     session_start();
     ob_start(); // เริ่มเก็บ output buffer
-    include "../../include/config.inc.php";
+    include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/include/config.inc.php';
+    if($_SESSION["valid_admin"]==""){
+            echo "<meta http-equiv='refresh' content='0;url=/project_assignment/src/login.php'>";
+            exit();
+        }
     $sql="select distinct(role_id) from tb_roles";
     $result=mysqli_query($conn,$sql);
 ?>
 <div class="row">
     <div class="col-lg-2 col-sm-2 col-12 border-end bg-1">
-        <?php include "navbar.php";?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/src/admin/navbar.php';?>
     </div>
     <div class="col-lg-10 col-sm-10 col-12">
         <?php include "head.php"; ?>

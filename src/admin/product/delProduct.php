@@ -1,7 +1,11 @@
 <?php
     session_start();
+    include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/include/config.inc.php';
+    if($_SESSION["valid_admin"]==""){
+            echo "<meta http-equiv='refresh' content='0;url=/project_assignment/src/login.php'>";
+            exit();
+        }
 
-    include '../../../include/config.inc.php';
 
     $product_id=$_REQUEST["product_id"];
     $product_pic=$_REQUEST["product_pic"];

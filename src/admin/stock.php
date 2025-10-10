@@ -1,82 +1,110 @@
 <?php
-    session_start();
-    
-    include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/include/config.inc.php';
-    include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/include/function.php';
+session_start();
+include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/include/config.inc.php';
 
-    $type=$_POST["type"];
-    if ($type == "") {
-        $sql = "SELECT * FROM tb_products WHERE is_active='Available' ORDER BY product_id ASC";
-    } else {
-        $sql = "SELECT * FROM tb_products WHERE category_id='$type' AND is_active='Available' ORDER BY product_id ASC";
-    }
+// ดึงข้อมูลสินค้าที่ถูกเบิกออกจากคลัง (รวมจำนวนทั้งหมด)
+$sql = "
+    SELECT 
+        p.product_id,
+        p.product_name,
+        p.product_pic,
+        p.category_id,
+        p.cost_price,
+        p.sell_price,
+        IFNULL(SUM(m.stock_qty), 0) AS total_qty_out
+    FROM tb_products p
+    LEFT JOIN tb_stock_movement m 
+        ON p.product_id = m.product_id 
+        AND m.movement_type = 'เบิกสินค้า'
+    WHERE p.is_active = 'Available'
+    GROUP BY 
+        p.product_id, 
+        p.product_name, 
+        p.product_pic, 
+        p.category_id, 
+        p.cost_price, 
+        p.sell_price
+    ORDER BY p.product_id ASC
+";
 
-    $Data = mysqli_query($conn, $sql);
-    $Num = mysqli_num_rows($Data);
+$Data = mysqli_query($conn, $sql);
+$Num = mysqli_num_rows($Data);
 ?>
 
 <div class="row">
-    <div class="col-lg-2 col-sm-2 col-12 border-end bg-1">
+    <!-- Sidebar -->
+    <div class="col-lg-2 col-sm-3 col-12 border-end bg-1">
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/src/admin/navbar.php'; ?>
     </div>
-    <div class="col-lg-10 col-sm-10 col-12">
-        <?php include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/src/admin/head.php';?><br><br><br><br><br>
-        <div class="container"><br>
-            <center><h2><b>Stock สินค้า</b></h2></center><br>
-            <div class="row">
-                <div class="col-lg-4 col-sm-4">
-                    <form action="stock.php" method="post">
-                        <div class="input-group">
-                            <select name="type" id="type" class="form-select" required>
-                                <option value="">---หมวดหมู่สินค้า---</option>
-                                <option value="1">เครื่องดื่ม</option>
-                                <option value="2">อาหารแห้ง</option>
-                                <option value="3">ขนม</option>
-                                <option value="4">ของใช้ส่วนตัว</option>
-                                <option value="5">ผลิตภัณฑ์ทำความสะอาด</option>
-                                <option value="6">เครื่องเขียน</option>
-                            </select>
-                            <button type="submit" class="btn btn-primary">ค้นหา</button>
-                        </div>
-                    </form><br>
-                </div>
-                <div class="col-lg-4 col-sm-4">
-                </div>
-                <div class="col-lg-4 col-sm-4">
-                </div>
-            </div><hr>
-            <?php if($Num==0): ?>
-                <center><h2 class="text-danger"><b>ไม่พบข้อมูล</b></h2></center><br>
+
+    <!-- Main Content -->
+    <div class="col-lg-10 col-sm-9 col-12">
+        <?php include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/src/admin/head.php'; ?>
+        <br><br><br><br><br>
+
+        <div class="container my-4">
+            <center>
+                <h2 class="fw-bold text-dark">📦 สินค้าหน้าร้าน</h2>
+                <hr class="w-25 border-3 border-primary">
+            </center>
+
+            <?php if ($Num == 0): ?>
+                <center>
+                    <h3 class="text-danger mt-5"><b>❌ ไม่พบข้อมูลการเบิกสินค้า</b></h3>
+                </center>
             <?php else: ?>
-                <center><h2 class="text-primary"><b>ข้อมูล <?=$Num?> รายการ</b></h2></center><br>
-            <table class="table table-hover table-striped mt-3">
-                    <tr align="center">
-                        <th>รหัสสินค้า</th>
-                        <th>ชื่อสินค้า</th>
-                        <th>หมวดหมู่</th>
-                        <th>จำนวน</th>
-                        <th>ราคาทุน</th>
-                        <th>ราคาขาย</th>
-                    </tr>
-                    <?php while($row = mysqli_fetch_assoc($Data)): ?>
-                    <tr align="center">
-                        <td><?=$row['product_id']?></td>
-                        <td>
-                            <img src="product/<?=$row['product_pic']?>" class="rounded-pill" width="100"><br>
-                            <?=$row['product_name']?>
-                        </td>
-                        <td>
-                            <?=["1"=>"เครื่องดื่ม","2"=>"อาหารแห้ง","3"=>"ขนม","4"=>"ของใช้ส่วนตัว","5"=>"ผลิตภัณฑ์ทำความสะอาด","6"=>"เครื่องเขียน"][$row['category_id']] ?? "-"?>
-                        </td>
-                        <td><?=$row['product_num']?></td>
-                        <td class="text-danger fw-bold"><?=number_format($row['cost_price'],2)?> ฿</td>
-                        <td class="text-success fw-bold"><?=number_format($row['sell_price'],2)?> ฿</td>
-                        </tr>
-                    <?php endwhile; ?>
-                </table>
-            <?php
-                endif;
-            ?>
+                <div class="d-flex justify-content-between align-items-center mb-3">
+                    <h4 class="text-primary fw-bold mb-0">
+                        ข้อมูลสินค้าหน้าร้านทั้งหมด <span class="text-dark">(<?=$Num?> รายการ)</span>
+                    </h4>
+                </div>
+
+                <div class="table-responsive shadow-sm rounded-3">
+                    <table class="table table-hover table-striped align-middle">
+                            <tr>
+                                <th scope="col">รหัสสินค้า</th>
+                                <th scope="col">ชื่อสินค้า</th>
+                                <th scope="col">หมวดหมู่</th>
+                                <th scope="col">จำนวนหน้าร้าน</th>
+                                <th scope="col">ราคาทุน</th>
+                                <th scope="col">ราคาขาย</th>
+                            </tr>
+                            <?php while ($row = mysqli_fetch_assoc($Data)): ?>
+                                <tr class="text-center">
+                                    <td class="fw-bold"><?=$row['product_id']?></td>
+                                    <td>
+                                        <img 
+                                            src="/project_assignment/src/admin/product/product/<?=$row['product_pic']?>" 
+                                            alt="product" 
+                                            class="rounded-circle shadow-sm mb-2" 
+                                            width="80" height="80"
+                                        ><br>
+                                        <span class="fw-semibold text-dark"><?=$row['product_name']?></span>
+                                    </td>
+                                    <td>
+                                        <?= [
+                                            "1" => "เครื่องดื่ม",
+                                            "2" => "อาหารแห้ง",
+                                            "3" => "ขนม",
+                                            "4" => "ของใช้ส่วนตัว",
+                                            "5" => "ผลิตภัณฑ์ทำความสะอาด",
+                                            "6" => "เครื่องเขียน"
+                                        ][$row['category_id']] ?? "-" ?>
+                                    </td>
+                                    <td class="fw-bold text-primary">
+                                        <?= number_format($row['total_qty_out'] ?? 0) ?> ชิ้น
+                                    </td>
+                                    <td class="fw-bold text-danger">
+                                        <?= number_format($row['cost_price'], 2) ?> ฿
+                                    </td>
+                                    <td class="fw-bold text-success">
+                                        <?= number_format($row['sell_price'], 2) ?> ฿
+                                    </td>
+                                </tr>
+                            <?php endwhile; ?>
+                    </table>
+                </div>
+            <?php endif; ?>
         </div>
     </div>
 </div>

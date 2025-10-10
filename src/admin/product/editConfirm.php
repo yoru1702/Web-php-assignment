@@ -2,6 +2,11 @@
 session_start();
 include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/include/config.inc.php';
 
+if($_SESSION["valid_admin"]==""){
+    echo "<meta http-equiv='refresh' content='0;url=/project_assignment/src/login.php'>";
+    exit();
+}
+
 // รับค่าจากฟอร์ม
 $product_id   = $_POST["product_id"];
 $product_name = mysqli_real_escape_string($conn, $_POST["product_name"]);
