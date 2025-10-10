@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 10, 2025 at 11:12 AM
+-- Generation Time: Oct 10, 2025 at 02:07 PM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -58,17 +58,18 @@ CREATE TABLE `tb_products` (
   `sell_price` decimal(10,2) NOT NULL,
   `is_active` enum('Available','Not Available') DEFAULT 'Available',
   `product_pic` varchar(100) DEFAULT NULL,
-  `product_num` int(11) NOT NULL
+  `product_num` int(11) NOT NULL,
+  `stock_qty` int(11) NOT NULL DEFAULT 0
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
 -- Dumping data for table `tb_products`
 --
 
-INSERT INTO `tb_products` (`product_id`, `product_name`, `category_id`, `cost_price`, `sell_price`, `is_active`, `product_pic`, `product_num`) VALUES
-(3, 'บะหมี่กึ่งสำเร็จรูป', 2, 12.00, 15.00, 'Not Available', 'p3.jpg', 40),
-(4, 'เป็ปซี่', 1, 15.00, 20.00, 'Available', 'p4.jpg', 50),
-(10, 'เบียร์สิงห์', 1, 45.00, 60.00, 'Available', 'p10.jpg', 75);
+INSERT INTO `tb_products` (`product_id`, `product_name`, `category_id`, `cost_price`, `sell_price`, `is_active`, `product_pic`, `product_num`, `stock_qty`) VALUES
+(3, 'บะหมี่กึ่งสำเร็จรูป', 2, 12.00, 15.00, 'Not Available', 'p3.jpg', 500, 0),
+(4, 'เป็ปซี่', 1, 15.00, 20.00, 'Available', 'p4.jpg', 80, 95),
+(10, 'เบียร์สิงห์', 1, 45.00, 60.00, 'Available', 'p10.jpg', 100, 40);
 
 -- --------------------------------------------------------
 
@@ -105,6 +106,14 @@ CREATE TABLE `tb_sales` (
   `user_id` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
+--
+-- Dumping data for table `tb_sales`
+--
+
+INSERT INTO `tb_sales` (`sale_id`, `sale_no`, `sale_datetime`, `subtotal`, `tax`, `total`, `user_id`) VALUES
+(8, 1760094829, '2025-10-10 18:13:49', 200.00, 14.00, 214.00, 1),
+(9, 1760095309, '2025-10-10 18:21:49', 700.00, 49.00, 749.00, 1);
+
 -- --------------------------------------------------------
 
 --
@@ -119,6 +128,15 @@ CREATE TABLE `tb_salestime` (
   `unit_price` decimal(10,2) NOT NULL,
   `line_total` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_salestime`
+--
+
+INSERT INTO `tb_salestime` (`sale_time_id`, `sale_id`, `product_id`, `qty`, `unit_price`, `line_total`) VALUES
+(8, 8, 4, 10, 20.00, 200.00),
+(9, 9, 4, 5, 20.00, 100.00),
+(10, 9, 10, 10, 60.00, 600.00);
 
 -- --------------------------------------------------------
 
@@ -143,12 +161,8 @@ CREATE TABLE `tb_stock_movement` (
 
 INSERT INTO `tb_stock_movement` (`movement_id`, `product_id`, `movement_type`, `qty_signed`, `note`, `user_id`, `created_at`, `stock_qty`) VALUES
 (5, 10, 'เพิ่มสินค้าใหม่', '+', 'เพิ่มสินค้า เบียร์สิงห์ จำนวน 120 ชิ้น', 1, '2025-10-08 21:52:53', NULL),
-(18, 3, 'เบิกสินค้า', '-', 'เบิกสินค้า บะหมี่กึ่งสำเร็จรูป ออกจากคลัง จำนวน 10 ชิ้น', 1, '2025-10-09 22:18:11', 10),
-(19, 3, 'เบิกสินค้า', '-', 'เบิกสินค้า บะหมี่กึ่งสำเร็จรูป ออกจากคลัง จำนวน 10 ชิ้น', 1, '2025-10-09 22:24:26', 10),
-(20, 3, 'เบิกสินค้า', '-', 'เบิกสินค้า บะหมี่กึ่งสำเร็จรูป ออกจากคลัง จำนวน 10 ชิ้น', 1, '2025-10-09 22:24:51', 10),
-(21, 4, 'เบิกสินค้า', '-', 'เบิกสินค้า เป็ปซี่ ออกจากคลัง จำนวน 25 ชิ้น', 1, '2025-10-09 22:37:51', 25),
-(22, 4, 'เบิกสินค้า', '-', 'เบิกสินค้า เป็ปซี่ ออกจากคลัง จำนวน 25 ชิ้น', 1, '2025-10-09 22:39:49', 25),
-(23, 10, 'เบิกสินค้า', '-', 'เบิกสินค้า เบียร์สิงห์ ออกจากคลัง จำนวน 45 ชิ้น', 1, '2025-10-10 15:20:57', 45);
+(26, 4, 'เบิกสินค้า', '-', 'เบิกสินค้า เป็ปซี่ จำนวน 120 ชิ้น จากคลังเข้าหน้าร้าน', 1, '2025-10-10 18:08:01', 120),
+(27, 10, 'เบิกสินค้า', '-', 'เบิกสินค้า เบียร์สิงห์ จำนวน 50 ชิ้น จากคลังเข้าหน้าร้าน', 1, '2025-10-10 18:08:46', 50);
 
 -- --------------------------------------------------------
 
@@ -257,19 +271,19 @@ ALTER TABLE `tb_roles`
 -- AUTO_INCREMENT for table `tb_sales`
 --
 ALTER TABLE `tb_sales`
-  MODIFY `sale_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `sale_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `tb_salestime`
 --
 ALTER TABLE `tb_salestime`
-  MODIFY `sale_time_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `sale_time_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `tb_stock_movement`
 --
 ALTER TABLE `tb_stock_movement`
-  MODIFY `movement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+  MODIFY `movement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=28;
 
 --
 -- AUTO_INCREMENT for table `tb_users`
