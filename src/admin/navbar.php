@@ -10,6 +10,7 @@
      <script src="/project_assignment/asset/js/jquery-3.7.1.min.js"></script>
      <!-- icon -->
      <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+
      <!-- font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -38,16 +39,16 @@
             <a href="/project_assignment/src/admin/index.php" class="nav-link border-bottom">Dashboard</a>
         </li>
         <li class="nav-item">
-            <a href="/project_assignment/src/admin/user/user.php" class="nav-link border-bottom">ข้อมูลพนักงาน</a>
+            <a href="/project_assignment/src/admin/user/user.php" class="nav-link border-bottom"><i class="fa-solid fa-users">&nbsp;</i>ข้อมูลพนักงาน</a>
         </li>
         <li class="nav-item">
-            <a href="/project_assignment/src/admin/product/product.php" class="nav-link border-bottom">จัดการคลังสินค้า</a>
+            <a href="/project_assignment/src/admin/product/product.php" class="nav-link border-bottom"><i class="fa-solid fa-cart-shopping">&nbsp;</i>จัดการคลังสินค้า</a>
         </li>
         <li class="nav-item">
-            <a href="/project_assignment/src/admin/stock.php" class="nav-link border-bottom">สินค้าหน้าร้าน</a>
+            <a href="/project_assignment/src/admin/stock.php" class="nav-link border-bottom"><i class="fa-solid fa-shop">&nbsp;&nbsp;</i>สินค้าหน้าร้าน</a>
         </li>
         <li class="nav-item">
-            <a href="/project_assignment/src/admin/product/manageAll.php" class="nav-link border-bottom">เบิกสินค้า</a>
+            <a href="/project_assignment/src/admin/product/manageAll.php" class="nav-link border-bottom"><i class="fa-solid fa-cart-plus">&nbsp;&nbsp;</i>เบิกสินค้า</a>
         </li>
         <li class="nav-item">
             <a href="/project_assignment/src/admin/stock/history.php" class="nav-link border-bottom">การเคลื่อนไหวคลังสินค้า</a>

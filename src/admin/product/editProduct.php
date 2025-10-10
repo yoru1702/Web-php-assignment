@@ -66,8 +66,8 @@
                     <label>รูปสินค้า :</label><br>
                     <?php if($read['product_pic']): ?>
                         <center>
+                            <img src="/project_assignment/asset/img/product/<?=$product_pic?>" class="rounded-pill" width="200"><br>
                             <input type="checkbox" name="del" value="1"> ลบ
-                            <br><img src="product/<?= $read['product_pic'] ?>" class="rounded-pill" width="200">
                         </center>
                     <?php else: ?>
                         <input type="file" class="form-control" name="pic_new" accept=".jpg,.png,.gif">

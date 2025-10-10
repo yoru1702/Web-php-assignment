@@ -10,11 +10,10 @@
     }
 
 
-    //  แก้จุดพิมพ์ผิดจาก mysqli_set_ฟharset เป็น mysqli_set_charset
     mysqli_set_charset($conn, "utf8");
 
     //  ตั้ง timezone และปิด error warning
     date_default_timezone_set("Asia/Bangkok");
-    // error_reporting(0);
-    error_reporting(~E_NOTICE);
+    error_reporting(0);
+    // error_reporting(~E_NOTICE);
 ?>

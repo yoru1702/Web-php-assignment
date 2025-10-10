@@ -81,27 +81,6 @@
                     <label><h4><b>หมายเหตุ :</b></h4></label>
                     <textarea class="form-control m-2" name="note" id="note" rows="3" placeholder="ระบุหมายเหตุ เช่น เบิกสินค้าไปหน้าร้าน A"></textarea>
                 </div>
-                <label><h4><b>ข้อมูลพนักงาน :</b></h4></label>
-                <div class="col-lg-12 col-sm-12 col-12">
-                    <label>เลือกรหัสพนักงาน :</label></label>
-                    <select name="Name" id="NameSelect" class="form-select m-2" required>
-                        <option value="">== เลือกรหัสพนักงาน ==</option>
-                        <?php
-                            while($read2 = mysqli_fetch_assoc($result2)) {
-                                $user_id    = $read2["user_id"];
-                                $name_user  = $read2["name_user"];
-                                $sname_user = $read2["sname_user"];
-                        ?>
-                            <option 
-                                value="<?php echo $user_id; ?>"
-                                data-name="<?php echo htmlspecialchars($name_user); ?>"
-                                data-sname="<?php echo htmlspecialchars($sname_user); ?>"
-                            >
-                                รหัส <?php echo $user_id; ?> : <?php echo $name_user . " " . $sname_user; ?>
-                            </option>
-                        <?php } ?>
-                    </select>
-                </div>
                 <form action="manageConfirm.php" method="post" id="confirmForm" onsubmit="return prepareAndSubmit()">
                     <button class="btn w-100 m-2 bg-primary" type="submit" style="color: #fff;">
                         <b>ตัดรายการสินค้าออกคลัง</b>

@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 03, 2025 at 12:55 PM
+-- Generation Time: Oct 10, 2025 at 11:12 AM
 -- Server version: 10.4.28-MariaDB
 -- PHP Version: 8.2.4
 
@@ -66,9 +66,9 @@ CREATE TABLE `tb_products` (
 --
 
 INSERT INTO `tb_products` (`product_id`, `product_name`, `category_id`, `cost_price`, `sell_price`, `is_active`, `product_pic`, `product_num`) VALUES
-(3, 'บะหมี่กึ่งสำเร็จรูป', 2, 12.00, 15.00, NULL, '', 100),
-(4, 'เป็ปซี่', 1, 15.00, 20.00, NULL, '', 50),
-(5, 'เบียร์สิงห์', 1, 60.00, 69.00, NULL, '', 20);
+(3, 'บะหมี่กึ่งสำเร็จรูป', 2, 12.00, 15.00, 'Not Available', 'p3.jpg', 40),
+(4, 'เป็ปซี่', 1, 15.00, 20.00, 'Available', 'p4.jpg', 50),
+(10, 'เบียร์สิงห์', 1, 45.00, 60.00, 'Available', 'p10.jpg', 75);
 
 -- --------------------------------------------------------
 
@@ -133,8 +133,22 @@ CREATE TABLE `tb_stock_movement` (
   `qty_signed` char(1) NOT NULL,
   `note` varchar(255) DEFAULT NULL,
   `user_id` int(11) NOT NULL,
-  `created_at` datetime NOT NULL
+  `created_at` datetime NOT NULL,
+  `stock_qty` int(11) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `tb_stock_movement`
+--
+
+INSERT INTO `tb_stock_movement` (`movement_id`, `product_id`, `movement_type`, `qty_signed`, `note`, `user_id`, `created_at`, `stock_qty`) VALUES
+(5, 10, 'เพิ่มสินค้าใหม่', '+', 'เพิ่มสินค้า เบียร์สิงห์ จำนวน 120 ชิ้น', 1, '2025-10-08 21:52:53', NULL),
+(18, 3, 'เบิกสินค้า', '-', 'เบิกสินค้า บะหมี่กึ่งสำเร็จรูป ออกจากคลัง จำนวน 10 ชิ้น', 1, '2025-10-09 22:18:11', 10),
+(19, 3, 'เบิกสินค้า', '-', 'เบิกสินค้า บะหมี่กึ่งสำเร็จรูป ออกจากคลัง จำนวน 10 ชิ้น', 1, '2025-10-09 22:24:26', 10),
+(20, 3, 'เบิกสินค้า', '-', 'เบิกสินค้า บะหมี่กึ่งสำเร็จรูป ออกจากคลัง จำนวน 10 ชิ้น', 1, '2025-10-09 22:24:51', 10),
+(21, 4, 'เบิกสินค้า', '-', 'เบิกสินค้า เป็ปซี่ ออกจากคลัง จำนวน 25 ชิ้น', 1, '2025-10-09 22:37:51', 25),
+(22, 4, 'เบิกสินค้า', '-', 'เบิกสินค้า เป็ปซี่ ออกจากคลัง จำนวน 25 ชิ้น', 1, '2025-10-09 22:39:49', 25),
+(23, 10, 'เบิกสินค้า', '-', 'เบิกสินค้า เบียร์สิงห์ ออกจากคลัง จำนวน 45 ชิ้น', 1, '2025-10-10 15:20:57', 45);
 
 -- --------------------------------------------------------
 
@@ -158,7 +172,8 @@ CREATE TABLE `tb_users` (
 
 INSERT INTO `tb_users` (`user_id`, `name_user`, `sname_user`, `tel`, `username`, `password`, `role_id`) VALUES
 (1, 'James', 'Browns', '0547214430', 'Admin1', 'password123', 1),
-(2, 'Alex', 'Morgan', '0641248966', 'Staff1', 'password456', 2);
+(2, 'Alex', 'Morgan', '0641248966', 'Staff1', 'password456', 2),
+(3, 'Dexter', 'Morgan', '0819875412', 'Admin2', 'password123', 1);
 
 --
 -- Indexes for dumped tables
@@ -230,7 +245,7 @@ ALTER TABLE `tb_category`
 -- AUTO_INCREMENT for table `tb_products`
 --
 ALTER TABLE `tb_products`
-  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `product_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `tb_roles`
@@ -254,13 +269,13 @@ ALTER TABLE `tb_salestime`
 -- AUTO_INCREMENT for table `tb_stock_movement`
 --
 ALTER TABLE `tb_stock_movement`
-  MODIFY `movement_id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `movement_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
 
 --
 -- AUTO_INCREMENT for table `tb_users`
 --
 ALTER TABLE `tb_users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- Constraints for dumped tables

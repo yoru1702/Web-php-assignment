@@ -44,13 +44,13 @@ $Num = mysqli_num_rows($Data);
 
         <div class="container my-4">
             <center>
-                <h2 class="fw-bold text-dark">📦 สินค้าหน้าร้าน</h2>
+                <h2 class="fw-bold text-dark">สินค้าหน้าร้าน</h2>
                 <hr class="w-25 border-3 border-primary">
             </center>
 
             <?php if ($Num == 0): ?>
                 <center>
-                    <h3 class="text-danger mt-5"><b>❌ ไม่พบข้อมูลการเบิกสินค้า</b></h3>
+                    <h3 class="text-danger mt-5"><b>ไม่พบข้อมูลการเบิกสินค้า</b></h3>
                 </center>
             <?php else: ?>
                 <div class="d-flex justify-content-between align-items-center mb-3">
@@ -58,7 +58,6 @@ $Num = mysqli_num_rows($Data);
                         ข้อมูลสินค้าหน้าร้านทั้งหมด <span class="text-dark">(<?=$Num?> รายการ)</span>
                     </h4>
                 </div>
-
                 <div class="table-responsive shadow-sm rounded-3">
                     <table class="table table-hover table-striped align-middle">
                             <tr>
@@ -70,15 +69,14 @@ $Num = mysqli_num_rows($Data);
                                 <th scope="col">ราคาขาย</th>
                             </tr>
                             <?php while ($row = mysqli_fetch_assoc($Data)): ?>
+                                <?php 
+                                    $img_path = "/project_assignment/asset/img/product/";
+                                    $img = $row['product_pic'] ? $img_path . $row['product_pic'] : "/project_assignment/asset/img/product/no.jpg";    
+                                ?>
                                 <tr class="text-center">
                                     <td class="fw-bold"><?=$row['product_id']?></td>
                                     <td>
-                                        <img 
-                                            src="/project_assignment/src/admin/product/product/<?=$row['product_pic']?>" 
-                                            alt="product" 
-                                            class="rounded-circle shadow-sm mb-2" 
-                                            width="80" height="80"
-                                        ><br>
+                                        <img src="<?= $img ?>" width="70" height="70" style="object-fit: cover; border-radius: 8px;"><br>
                                         <span class="fw-semibold text-dark"><?=$row['product_name']?></span>
                                     </td>
                                     <td>

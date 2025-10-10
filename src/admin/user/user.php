@@ -21,7 +21,7 @@
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/src/admin/head.php'; ?><br><br><br><br>
         <div class="container my-4">
             <center>
-                <h2><b>ข้อมูลพนักงาน</b></h2>
+                <h2><b><i class="fa-solid fa-users">&nbsp;&nbsp;</i>ข้อมูลพนักงาน</b></h2>
             </center><br>
             <a class="btn btn-primary btn_add mb-3">-&nbsp;&nbsp;&nbsp;&nbsp;เพิ่มข้อมูลพนักงาน&nbsp;&nbsp;&nbsp;&nbsp;-</a>
             <form action="user.php" method="post" class="mb-3">

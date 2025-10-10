@@ -29,7 +29,7 @@
             $ext = strtolower(strrchr($f['name'], '.'));
             if (in_array($ext, ['.jpg', '.png', '.gif', '.jpeg'])) {
                 $fname = "p{$id}{$ext}";
-                move_uploaded_file($f['tmp_name'], "product/$fname");
+                move_uploaded_file($f['tmp_name'], "asset/img/product/$fname");
                 mysqli_query($conn, "UPDATE tb_products SET product_pic='$fname' WHERE product_id=$id");
             } else {
                 echo "<center><font color='red'><h2><b>นามสกุลไฟล์ไม่ถูกต้อง (.jpg, .png, .gif เท่านั้น)</b></h2></font></center>";
