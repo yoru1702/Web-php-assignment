@@ -1,6 +1,11 @@
 <?php
+<<<<<<< HEAD
+    session_start();
+    include $_SERVER['DOCUMENT_ROOT'] . '/Web-php-assignment/include/config.inc.php';
+=======
 session_start();
 include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/include/config.inc.php';
+>>>>>>> 17d20507b4be12d7d54d0153713e8dd5d5b01cb6
 
 // ดึงข้อมูลสินค้าหน้าร้านจาก tb_products โดยตรง
 $sql = "
@@ -23,17 +28,29 @@ $total = mysqli_num_rows($result);
 <div class="row">
     <!-- Sidebar -->
     <div class="col-lg-2 col-sm-3 col-12 border-end bg-1">
+<<<<<<< HEAD
+        <?php include $_SERVER['DOCUMENT_ROOT'] . '/Web-php-assignment/src/admin/navbar.php'; ?>
+=======
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/src/admin/navbar.php'; ?>
+>>>>>>> 17d20507b4be12d7d54d0153713e8dd5d5b01cb6
     </div>
 
     <!-- Main Content -->
     <div class="col-lg-10 col-sm-9 col-12">
+<<<<<<< HEAD
+        <?php include $_SERVER['DOCUMENT_ROOT'] . '/Web-php-assignment/src/admin/head.php'; ?>
+=======
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/src/admin/head.php'; ?>
+>>>>>>> 17d20507b4be12d7d54d0153713e8dd5d5b01cb6
         <br><br><br><br><br>
 
         <div class="container my-4">
             <center>
+<<<<<<< HEAD
+                <h2 class="fw-bold text-dark">📦 สินค้าหน้าร้าน</h2>
+=======
                 <h2 class="fw-bold text-dark"><i class="fa-solid fa-shop">&nbsp;&nbsp;</i>สินค้าหน้าร้าน</h2>
+>>>>>>> 17d20507b4be12d7d54d0153713e8dd5d5b01cb6
                 <hr class="w-25 border-3 border-primary">
             </center>
 
