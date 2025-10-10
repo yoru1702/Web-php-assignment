@@ -36,13 +36,13 @@
             <a href="#" class="nav-link active" style="background: linear-gradient(90deg,#108baa,#07c274);">Menu</a>
         </li>
         <li class="nav-item">
-            <a href="/project_assignment/src/admin/index.php" class="nav-link border-bottom">Dashboard</a>
+            <a href="/project_assignment/src/admin/index.php" class="nav-link border-bottom"><i class="fa-solid fa-house">&nbsp;&nbsp;</i>Dashboard</a>
         </li>
         <li class="nav-item">
-            <a href="/project_assignment/src/admin/user/user.php" class="nav-link border-bottom"><i class="fa-solid fa-users">&nbsp;</i>ข้อมูลพนักงาน</a>
+            <a href="/project_assignment/src/admin/user/user.php" class="nav-link border-bottom"><i class="fa-solid fa-users">&nbsp;&nbsp;</i>ข้อมูลพนักงาน</a>
         </li>
         <li class="nav-item">
-            <a href="/project_assignment/src/admin/product/product.php" class="nav-link border-bottom"><i class="fa-solid fa-cart-shopping">&nbsp;</i>จัดการคลังสินค้า</a>
+            <a href="/project_assignment/src/admin/product/product.php" class="nav-link border-bottom"><i class="fa-solid fa-cart-shopping">&nbsp;&nbsp;</i>จัดการคลังสินค้า</a>
         </li>
         <li class="nav-item">
             <a href="/project_assignment/src/admin/stock.php" class="nav-link border-bottom"><i class="fa-solid fa-shop">&nbsp;&nbsp;</i>สินค้าหน้าร้าน</a>
@@ -55,6 +55,15 @@
         </li>
         <li class="nav-item">
             <a href="#" class="nav-link active" style="background: linear-gradient(90deg,#108baa,#07c274);">รายงาน</a>
+        </li>
+        <li class="nav-item">
+            <a href="/project_assignment/src/admin/stock/history.php" class="nav-link border-bottom">รายงานข้อมูลพนักงาน</a>
+        </li>
+        <li class="nav-item">
+            <a href="/project_assignment/src/admin/stock/history.php" class="nav-link border-bottom">รายงานข้อมูลสินค้า</a>
+        </li>
+        <li class="nav-item">
+            <a href="/project_assignment/src/admin/stock/history.php" class="nav-link border-bottom">การเคลื่อนไหวคลังสินค้า</a>
         </li>
     </ul>
     <br><br><br><br><br><br><br><br><br>

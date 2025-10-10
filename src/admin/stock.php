@@ -44,7 +44,7 @@ $Num = mysqli_num_rows($Data);
 
         <div class="container my-4">
             <center>
-                <h2 class="fw-bold text-dark">สินค้าหน้าร้าน</h2>
+                <h2 class="fw-bold text-dark"><i class="fa-solid fa-shop">&nbsp;&nbsp;</i>สินค้าหน้าร้าน</h2>
                 <hr class="w-25 border-3 border-primary">
             </center>
 
@@ -60,7 +60,7 @@ $Num = mysqli_num_rows($Data);
                 </div>
                 <div class="table-responsive shadow-sm rounded-3">
                     <table class="table table-hover table-striped align-middle">
-                            <tr>
+                            <tr align="center">
                                 <th scope="col">รหัสสินค้า</th>
                                 <th scope="col">ชื่อสินค้า</th>
                                 <th scope="col">หมวดหมู่</th>

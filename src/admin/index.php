@@ -20,7 +20,7 @@
         <div class="container"><br>
             <div class="row">
                 <div class="col-lg-6 col-sm-6 col-12">
-                    <h2><b>Dashboard</b></h2><hr><br>
+                    <h2><b><i class="fa-solid fa-house">&nbsp;&nbsp;</i>Dashboard</b></h2><hr><br>
                 </div>
                 <div class="col-lg-6 col-sm-6 col-12">
                     <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
