@@ -1,6 +1,10 @@
 <?php
 session_start();
-include '../../../include/config.inc.php';
+include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/include/config.inc.php';
+if($_SESSION["valid_admin"]==""){
+        echo "<meta http-equiv='refresh' content='0;url=/project_assignment/src/login.php'>";
+        exit();
+    }
 ?>
 <form action="addConfirm.php" enctype="multipart/form-data" onsubmit="return check()" method="post">
     <div class="modal-content" style="border-radius:30px">

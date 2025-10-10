@@ -1,6 +1,9 @@
 <?php
     session_start();
-    
+    if($_SESSION["valid_admin"]==""){
+        echo "<meta http-equiv='refresh' content='0;url=/project_assignment/src/login.php'>";
+        exit();
+    }
     include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/include/config.inc.php';
     include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/include/function.php';
 
@@ -13,24 +16,17 @@
     }
     $Num=mysqli_num_rows($Data);
 
-    if($product_pic==""){
-        $product_pic="no.png";
-    }
     $Num=mysqli_num_rows($Data);
     
 ?>
-<<<<<<< HEAD
-
-=======
->>>>>>> 6fe7d52dc72a5e6be15307092b3b4cee7586ad3f
 <div class="row">
     <div class="col-lg-2 col-sm-2 col-12 border-end bg-1">
-        <?php include "navbar.php";?>
+        <?php include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/src/admin/navbar.php';?>
     </div>
     <div class="col-lg-10 col-sm-10 col-12">
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/src/admin/head.php';?><br><br><br><br><br>
         <div class="container"><br>
-            <center><h2><b>จัดการสินค้า</b></h2></center><br>
+            <center><h2><b><i class="fa-solid fa-cart-shopping">&nbsp;&nbsp;</i>จัดการคลังสินค้า</b></h2></center><br>
             <div class="row">
                 <div class="col-lg-12 col-sm-12">
                     <a class="btn btn_add btn-primary">-&nbsp;&nbsp;&nbsp;&nbsp;เพิ่มสินค้า&nbsp;&nbsp;&nbsp;&nbsp;-</a><br><br>
@@ -66,6 +62,8 @@
                         <th>จัดการ</th>
                     </tr>
                     <?php while($row = mysqli_fetch_assoc($Data)):                         
+                        $img_path = "/project_assignment/asset/img/product/";
+                        $img = $row['product_pic'] ? $img_path . $row['product_pic'] : "/project_assignment/asset/img/product/no.jpg";
                         $isActive = $row['is_active'];
                         $status_class = $isActive == 'Available' ? 'text-success' : 'text-danger';
                         $status_text = $isActive == 'Available' ? 'พร้อมขาย' : 'ไม่พร้อมขาย';
@@ -73,8 +71,8 @@
                     <tr align="center">
                         <td><?=$row['product_id']?></td>
                         <td>
-                            <img src="../asset/img/product/<?=$row['product_pic']?>" class="rounded-pill" width="100"><br>
-                            <?=$row['product_name']?>
+                            <img src="<?= $img ?>" width="70" height="70" style="object-fit: cover; border-radius: 8px;">
+                            <br><?=$row['product_name']?>
                         </td>
                         <td>
                             <?=["1"=>"เครื่องดื่ม","2"=>"อาหารแห้ง","3"=>"ขนม","4"=>"ของใช้ส่วนตัว","5"=>"ผลิตภัณฑ์ทำความสะอาด","6"=>"เครื่องเขียน"][$row['category_id']] ?? "-"?>

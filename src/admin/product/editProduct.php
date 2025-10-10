@@ -1,7 +1,11 @@
 <?php
     session_start();
-    include '../../../include/config.inc.php';
-    include '../../../include/function.php';
+    include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/include/config.inc.php';
+
+    if($_SESSION["valid_admin"]==""){
+        echo "<meta http-equiv='refresh' content='0;url=/project_assignment/src/login.php'>";
+        exit();
+    }
 
     $p = $_POST;
     $product_id = $p['product_id'];
@@ -11,7 +15,7 @@
 ?>
 <form action="editConfirm.php" enctype="multipart/form-data" method="POST" onsubmit="return check()">
     <div class="modal-content" style="border-radius:30px">
-        <div class="modal-header" style="background: linear-gradient(90deg,#108baa,#07c274);color: #fff;border-radius: 29px 29px 0 0;">
+        <div class="modal-header" style="border-radius: 29px 29px 0 0;">
             <h2><b><center>แก้ไขข้อมูลสินค้า</center></b></h2>
             <button type="button" class="btn-close bg-light" data-bs-dismiss="modal"></button>
         </div>
@@ -50,7 +54,6 @@
                     </select>
                 </div>
             </div>
-
             <div class="row">
                 <div class="col-sm-6 py-1">
                     <label>สถานะสินค้า :</label>
@@ -63,13 +66,19 @@
                     <label>รูปสินค้า :</label><br>
                     <?php if($read['product_pic']): ?>
                         <center>
+                            <img src="/project_assignment/asset/img/product/<?=$product_pic?>" class="rounded-pill" width="200"><br>
                             <input type="checkbox" name="del" value="1"> ลบ
-                            <br><img src="product/<?= $read['product_pic'] ?>" class="rounded-pill" width="200">
                         </center>
                     <?php else: ?>
                         <input type="file" class="form-control" name="pic_new" accept=".jpg,.png,.gif">
                         <small class="text-danger">[เฉพาะไฟล์ .jpg .png และ .gif]</small>
                     <?php endif; ?>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12 py-1">
+                    <label>หมายเหตุ (ไม่บังคับ) :</label>
+                    <textarea name="note" id="note" class="form-control" rows="5" placeholder="เช่น แก้ไขราคาต้นทุนสินค้าเนื่องจาก 10 บาท เป็น 16 บาท"></textarea>
                 </div>
             </div>
         </div>

@@ -3,6 +3,10 @@ session_start();
 include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/include/config.inc.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/include/function.php';
 include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/src/style.php';
+if($_SESSION["valid_admin"]==""){
+        echo "<meta http-equiv='refresh' content='0;url=/project_assignment/src/login.php'>";
+        exit();
+    }
 
 $sql = "SELECT m.*, p.product_name, u.name_user, u.sname_user
         FROM tb_stock_movement m
@@ -30,10 +34,9 @@ $Num = mysqli_num_rows($result);
                 <center><h2 class="text-danger"><b>ไม่พบข้อมูล</b></h2></center>
             <?php else: ?>
                 <center><h4 class="text-primary">จำนวน <?= $Num ?> รายการ</h4></center>
-                <table class="table table-hover table-striped mt-3 align-middle">
-                    <thead class="table-dark text-center">
-                        <tr>
-                            <th>#</th>
+                <table class="table table-hover table-striped">
+                        <tr align="center">
+                            <th>รหัสการเคลื่อนไหว</th>
                             <th>สินค้า</th>
                             <th>ประเภทการเคลื่อนไหว</th>
                             <th>สัญลักษณ์</th>
@@ -41,8 +44,6 @@ $Num = mysqli_num_rows($result);
                             <th>ผู้ทำรายการ</th>
                             <th>วันที่</th>
                         </tr>
-                    </thead>
-                    <tbody>
                         <?php $i = 1; while ($row = mysqli_fetch_assoc($result)): ?>
                         <tr align="center">
                             <td><?= $i++ ?></td>
@@ -65,7 +66,6 @@ $Num = mysqli_num_rows($result);
                             <td><?= date('d/m/Y H:i:s', strtotime($row['created_at'])) ?></td>
                         </tr>
                         <?php endwhile; ?>
-                    </tbody>
                 </table>
             <?php endif; ?>
         </div>

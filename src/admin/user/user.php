@@ -3,6 +3,10 @@
     include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/include/config.inc.php';
     include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/include/function.php';
     include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/src/style.php';
+    if($_SESSION["valid_admin"]==""){
+        echo "<meta http-equiv='refresh' content='0;url=/project_assignment/src/login.php'>";
+        exit();
+    }
 
     $search = $_POST['name'] ?? '';
     $Data = getUser($conn, $search);
@@ -14,11 +18,12 @@
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/src/admin/navbar.php'; ?>
     </div>
     <div class="col-lg-10 col-sm-10 col-12">
+        <?php include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/src/admin/head.php'; ?><br><br><br><br>
         <div class="container my-4">
             <center>
-                <h2><b>ข้อมูลพนักงาน</b></h2>
+                <h2><b><i class="fa-solid fa-users">&nbsp;&nbsp;</i>ข้อมูลพนักงาน</b></h2>
             </center><br>
-            <a class="btn btn-primary mb-3 btn_add">เพิ่มข้อมูลพนักงาน</a>
+            <a class="btn btn-primary btn_add mb-3">-&nbsp;&nbsp;&nbsp;&nbsp;เพิ่มข้อมูลพนักงาน&nbsp;&nbsp;&nbsp;&nbsp;-</a>
             <form action="user.php" method="post" class="mb-3">
                 <div class="input-group">
                     <span class="input-group-text">ค้นหา</span>

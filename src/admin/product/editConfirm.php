@@ -2,6 +2,11 @@
 session_start();
 include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/include/config.inc.php';
 
+if($_SESSION["valid_admin"]==""){
+    echo "<meta http-equiv='refresh' content='0;url=/project_assignment/src/login.php'>";
+    exit();
+}
+
 // รับค่าจากฟอร์ม
 $product_id   = $_POST["product_id"];
 $product_name = mysqli_real_escape_string($conn, $_POST["product_name"]);
@@ -16,7 +21,9 @@ $product_pic  = $_POST["product_pic"];
 $pic_new      = $_FILES["pic_new"]["tmp_name"];
 $pic_new_name = $_FILES["pic_new"]["name"];
 
-// อัปเดตข้อมูลพื้นฐาน
+$upload_dir = $_SERVER['DOCUMENT_ROOT'] . "/project_assignment/asset/img/product/";
+
+// อัปเดตข้อมูล
 $sql1 = "UPDATE tb_products SET 
             product_name='$product_name',
             cost_price='$cost_price',
@@ -27,34 +34,46 @@ $sql1 = "UPDATE tb_products SET
         WHERE product_id='$product_id'";
 $result1 = mysqli_query($conn, $sql1);
 
-// ถ้าติ๊ก “ลบรูป”
+// ถ้าลบรูป
 if ($del == 1) {
     $sql2 = "UPDATE tb_products SET product_pic='' WHERE product_id='$product_id'";
     mysqli_query($conn, $sql2);
 
-    if ($product_pic && file_exists("product/$product_pic")) {
-        unlink("product/$product_pic");
+    $old_path = $upload_dir . $product_pic;
+    if ($product_pic && file_exists($old_path)) {
+        unlink($old_path);
     }
+    $product_pic = "";
 }
 
 // ถ้ามีอัปโหลดรูปใหม่
-if ($pic_new != "") {
+if (!empty($pic_new)) {
     $type = strtolower($pic_new_name);
     $ext = strrchr($type, ".");
     if (in_array($ext, [".jpg", ".jpeg", ".png", ".gif"])) {
+
+        // ตั้งชื่อไฟล์ใหม่
         $filename = "p" . $product_id . $ext;
-        copy($pic_new, "product/$filename");
+        $target_path = $upload_dir . $filename;
 
-        $sql3 = "UPDATE tb_products SET product_pic='$filename' WHERE product_id='$product_id'";
-        mysqli_query($conn, $sql3);
+        // ลบรูปเก่าถ้ามี
+        $old_path = $upload_dir . $product_pic;
+        if ($product_pic && file_exists($old_path)) {
+            unlink($old_path);
+        }
 
-        // ลบรูปเก่าออก
-        if ($product_pic && file_exists("product/$product_pic")) {
-            unlink("product/$product_pic");
+        // คัดลอกรูปใหม่
+        if (copy($pic_new, $target_path)) {
+            $sql3 = "UPDATE tb_products SET product_pic='$filename' WHERE product_id='$product_id'";
+            mysqli_query($conn, $sql3);
+        } else {
+            echo "<center><font color='red'><h2><b>อัปโหลดรูปไม่สำเร็จ</b></h2></font></center>";
+            echo "<meta http-equiv='refresh' content='2;url=product.php'>";
+            exit();
         }
     } else {
-        echo "<center><font color='red'><h2><b>❌ นามสกุลไฟล์ไม่ถูกต้อง (.jpg, .png, .gif เท่านั้น)</b></h2></font></center>";
-        echo "<meta http-equiv='refresh' content='1;url=product.php'>";
+        echo "<center><font color='red'><h2><b>นามสกุลไฟล์ไม่ถูกต้อง (.jpg, .png, .gif เท่านั้น)</b></h2></font></center>";
+        echo "<meta http-equiv='refresh' content='2;url=product.php'>";
         exit();
     }
 }

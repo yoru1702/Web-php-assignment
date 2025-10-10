@@ -1,7 +1,11 @@
 <?php
     session_start();
 
-    include '../../../include/config.inc.php';
+    include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/include/config.inc.php';
+    if($_SESSION["valid_admin"]==""){
+            echo "<meta http-equiv='refresh' content='0;url=/project_assignment/src/login.php'>";
+            exit();
+        }
 
     $user_id=$_REQUEST["user_id"];
 
