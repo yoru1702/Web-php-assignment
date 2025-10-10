@@ -22,7 +22,7 @@
 </style>
 <body>
 <!-- Navbar start -->
-    <nav class="navbar m-4 navbar-expand-sm" style="border-radius:50px;">
+    <nav class="navbar m-3 navbar-expand-sm" style="border-radius:50px;">
         <div class="container-fluid">
             <div class="navbar-nav">
                 <div class="nav-item">

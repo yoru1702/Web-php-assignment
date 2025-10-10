@@ -18,7 +18,22 @@
         <?php include "head.php"; ?>
         <br><br><br><br><br>
         <div class="container"><br>
-            <h2><b>Dashboard</b></h2><hr><br>
+            <div class="row">
+                <div class="col-lg-6 col-sm-6 col-12">
+                    <h2><b>Dashboard</b></h2><hr><br>
+                </div>
+                <div class="col-lg-6 col-sm-6 col-12">
+                    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">
+                        Open modal
+                    </button>
+                </div>
+                <div class="modal" id="myModal">
+                    <?php include "sales_manege.php"; ?>
+                </div>
+
+
+
+            </div>
             <div class="row">
                 <div class="col-lg-3 col-sm-6 col-12">
                     <div class="card text-bg-success mb-3">

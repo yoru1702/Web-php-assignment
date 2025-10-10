@@ -22,6 +22,10 @@
     $Num=mysqli_num_rows($Data);
     
 ?>
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6fe7d52dc72a5e6be15307092b3b4cee7586ad3f
 <div class="row">
     <div class="col-lg-2 col-sm-2 col-12 border-end bg-1">
         <?php include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/src/admin/navbar.php';?>
