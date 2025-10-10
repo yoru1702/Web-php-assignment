@@ -14,6 +14,6 @@
 
     //  ตั้ง timezone และปิด error warning
     date_default_timezone_set("Asia/Bangkok");
-    error_reporting(0);
-    // error_reporting(~E_NOTICE);
+    // error_reporting(0);
+    error_reporting(~E_NOTICE);
 ?>

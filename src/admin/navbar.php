@@ -54,10 +54,13 @@
             <a href="/project_assignment/src/admin/stock/history.php" class="nav-link border-bottom">การเคลื่อนไหวคลังสินค้า</a>
         </li>
         <li class="nav-item">
+            <a href="/project_assignment/src/admin/saleManage.php" class="nav-link border-bottom">การสินค้า</a>
+        </li>
+        <li class="nav-item">
             <a href="#" class="nav-link active" style="background: linear-gradient(90deg,#108baa,#07c274);">รายงาน</a>
         </li>
         <li class="nav-item">
-            <a href="/project_assignment/src/admin/stock/history.php" class="nav-link border-bottom">รายงานข้อมูลพนักงาน</a>
+            <a href="/project_assignment/src/admin/report/report_user.php" class="nav-link border-bottom">รายงานข้อมูลพนักงาน</a>
         </li>
         <li class="nav-item">
             <a href="/project_assignment/src/admin/stock/history.php" class="nav-link border-bottom">รายงานข้อมูลสินค้า</a>

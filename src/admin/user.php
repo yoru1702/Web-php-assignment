@@ -2,7 +2,7 @@
     ini_set('session.cookie_path', '/');
     session_start();
     ob_start(); // เริ่มเก็บ output buffer
-    include "../../include/config.inc.php";
+    include $_SERVER['DOCUMENT_ROOT'] . '/project_assignment/include/config.inc.php';
     $sql="select distinct(role_id) from tb_roles";
     $result=mysqli_query($conn,$sql);
     include "../../include/function.php";
